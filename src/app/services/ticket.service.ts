@@ -1,0 +1,34 @@
+import { Ticket } from './../model/ticket.model';
+import { Injectable } from '@angular/core';
+import { HELP_DESK_API } from './helpdesk.api';
+import { HttpClient } from '@angular/common/http'
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TicketService {
+
+  constructor(private http: HttpClient) { }
+
+  createOrUpdate(ticket:Ticket) {
+    if(ticket.id != null && ticket.id != ''){
+      return this.http.put(`${HELP_DESK_API}/api/ticket`, ticket);
+    }else{
+      ticket.id = null;
+      ticket.status = 'New'
+      return this.http.post(`${HELP_DESK_API}/api/ticket`, ticket);
+    }
+  }
+
+  findAll(page:number, count:number) {
+    return this.http.get(`${HELP_DESK_API}/api/ticket/${page}/${count}`);
+  }
+
+  findById(id:string) {
+    return this.http.get(`${HELP_DESK_API}/api/ticket/${id}`);
+  }
+
+  delete(id:string) {
+    return this.http.delete(`${HELP_DESK_API}/api/ticket/${id}`);
+  }
+}
