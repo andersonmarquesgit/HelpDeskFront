@@ -43,4 +43,8 @@ export class TicketService {
   changeStatus(status:string, ticket:Ticket) {
     return this.http.put(`${HELP_DESK_API}/api/ticket/${ticket.id}/${status}`, ticket);
   }
+
+  summary() {
+    return this.http.get(`${HELP_DESK_API}/api/ticket/summary`);
+  }
 }
